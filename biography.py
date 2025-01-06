@@ -29,13 +29,12 @@ except Exception as e:
 
 # Función para obtener los autores sin biografía
 def get_authors():
-    cursor.execute("SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM author WHERE bio IS NULL limit 4")  
+    cursor.execute("SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM author WHERE bio IS NULL")
     return cursor.fetchall()  # Lista de tuplas (id, name)
 
 # Función para generar la biografía con OpenAI
 def get_author_biography(author_name):
-    prompt = f"Write a concise biography of {author_name}, highlighting their most notable works, literary style, and contributions to literature. Mention their impact on their literary genre and their most famous work. Keep it brief and informative."
-
+    prompt = f"Write a brief 50-word biography of {author_name}, focusing on their most famous work, literary style, and key contributions to literature. Keep it concise and impactful."
     try:
         client= OpenAI(api_key=API_KEY)
         response = client.chat.completions.create(
